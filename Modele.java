@@ -1,5 +1,9 @@
 package blokus;
 
+import blokus.LegumeModele.Legumes;
+import blokus.LegumeModele.Tomates;
+
+import java.io.IOException;
 import java.util.Observable;
 
 public class Modele extends Observable implements Runnable{
@@ -7,7 +11,7 @@ public class Modele extends Observable implements Runnable{
     public static final int TAILLE = 10;
 
 
-    boolean[][] plateau = new boolean[TAILLE][TAILLE];
+    Case[][] plateau = new Case[TAILLE][TAILLE];
 
 
     public Modele() {
@@ -20,7 +24,11 @@ public class Modele extends Observable implements Runnable{
 
     @Override
     public void run() {
-        randomize();
+        try {
+            Init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
         //while(true) {
@@ -38,17 +46,28 @@ public class Modele extends Observable implements Runnable{
     /**
      * Modify the plateau to random values
      */
-    public void randomize() {
+    public void Init() throws IOException {
         for (int i = 0; i < TAILLE; i++) {
             for (int j = 0; j < TAILLE; j++) {
-                plateau[i][j] = Math.random() < 0.5;
+                plateau[i][j] = new Case(10, 10, null);
             }
         }
     }
 
-    public void changeColor(int x, int y) {
-        plateau[x][y] = !plateau[x][y];
+    public void plantLegumeInCase(int x, int y, Legumes legume){
+        plateau[x][y].plantLegume(legume);
         setChanged();
         notifyObservers();
     }
+
+
+
+    /*public void changeColor(int x, int y) {
+        plateau[x][y] = !plateau[x][y];
+        setChanged();
+        notifyObservers();
+    }*/
+
+
+
 }

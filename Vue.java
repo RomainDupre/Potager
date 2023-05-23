@@ -5,20 +5,16 @@
 
 package blokus;
 
+import blokus.LegumeModele.Tomates;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BorderFactory;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JMenu;
+import javax.swing.*;
 
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
@@ -66,11 +62,17 @@ public class Vue extends JFrame implements Observer {
 
         for(int i = 0; i<modele.plateau.length;i++){
             for (int j = 0; j<modele.plateau[i].length;j++){
-                Case uneCase = new Case(i, j);
+                Case uneCase = new Case(i, j, null);
                 uneCase.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        modele.changeColor(((Case)e.getSource()).x, ((Case)e.getSource()).y);
+                        try {
+                            modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, new Tomates(10.0F, 10.0f));
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        ((Case)e.getSource()).setLabel("salade");
+                                //(ImageIcon iconeSalade = salade.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
                     }
 
                     @Override
@@ -107,8 +109,9 @@ public class Vue extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
-                if (modele.plateau[i][j]) {
-                    plateau[i][j].setBackground(Color.BLACK);
+                if (modele.plateau[i][j].hasLegume()) {
+                    JLabel label = new JLabel(new ImageIcon(modele.plateau[i][j].legume.image));
+                    plateau[i][j].add(label);
                 } else {
                     plateau[i][j].setBackground(Color.WHITE);
                 }
