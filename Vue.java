@@ -68,6 +68,7 @@ public class Vue extends JFrame implements Observer {
                     public void mouseClicked(MouseEvent e) {
                         try {
                             modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, new Tomates(10.0F, 10.0f));
+
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -103,15 +104,15 @@ public class Vue extends JFrame implements Observer {
         pan.setBorder(blackline);
         add(pan);
     }
-
-
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("update done");
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
-                if (modele.plateau[i][j].hasLegume()) {
+                if (modele.plateau[i][j].hasLegume() && !modele.plateau[i][j].hasIcone()) {
                     JLabel label = new JLabel(new ImageIcon(modele.plateau[i][j].legume.image));
                     plateau[i][j].add(label);
+                    modele.plateau[i][j].isIconeSet(true);
                 } else {
                     plateau[i][j].setBackground(Color.WHITE);
                 }

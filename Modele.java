@@ -3,6 +3,7 @@ package blokus;
 import blokus.LegumeModele.Legumes;
 import blokus.LegumeModele.Tomates;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Observable;
 
@@ -56,6 +57,11 @@ public class Modele extends Observable implements Runnable{
 
     public void plantLegumeInCase(int x, int y, Legumes legume){
         plateau[x][y].plantLegume(legume);
+
+       /* JLabel label = new JLabel(new ImageIcon(plateau[x][y].legume.image));
+        plateau[x][y].add(label);
+
+        */
         setChanged();
         notifyObservers();
     }
