@@ -27,6 +27,10 @@ public class Case extends JPanel implements Observer {
         this.y = y;
     }
 
+    public Legumes getLegume() {
+        return this.legume;
+    }
+
     public Case(int x, int y, Legumes legume) {
         this.x = x;
         this.y = y;

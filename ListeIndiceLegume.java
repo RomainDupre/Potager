@@ -1,7 +1,7 @@
 package blokus;
 
 public class ListeIndiceLegume {
-    public static int TOMATE =0;
+    public static int SALADE =0;
     public static int CHAMPIGNON=1;
 
     public static int ORANGE=2;

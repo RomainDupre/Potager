@@ -6,7 +6,7 @@
 package blokus;
 
 import blokus.LegumeModele.Legumes;
-import blokus.ListeLegumes.Tomates;
+import blokus.ListeLegumes.*;
 
 import java.awt.*;
 
@@ -47,8 +47,6 @@ public class Vue extends JFrame implements Observer {
 
     public int indicesX = 0;
     public int indicesY = 0;
-
-    public Image iconeLegume;
 
 
     Vue(Modele modele) {
@@ -165,27 +163,27 @@ public class Vue extends JFrame implements Observer {
         add(split);
     }
 
-    /*public void AttribuerImage(Case uneCase)
+    public void AttribuerImage(Case uneCase)
     {
-        switch(uneCase.legume.getClass()) {
+        switch(uneCase.getLegume().getLabel()) {
 
-            case Salades.class:
+            case "Salade":
                 indicesX = listeImage[SALADE][0];
                 indicesY = listeImage[SALADE][1];
                 break;
-            case Chapignons.class:
+            case "Champignon":
                 indicesX = listeImage[CHAMPIGNON][0];
                 indicesY = listeImage[CHAMPIGNON][1];
                 break;
-            case Oranges.class:
+            case "Orange":
                 indicesX = listeImage[ORANGE][0];
                 indicesY = listeImage[ORANGE][1];
                 break;
-            case Citrons.class:
+            case "Citron":
                 indicesX = listeImage[CITRON][0];
                 indicesY = listeImage[CITRON][1];
                 break;
-            case Betteraves.class:
+            case "Betterave":
                 indicesX = listeImage[BETTERAVE][0];
                 indicesY = listeImage[BETTERAVE][1];
                 break;
@@ -207,7 +205,7 @@ public class Vue extends JFrame implements Observer {
         uneCase.add(label);
     }
 
-     */
+
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("update done");
@@ -216,8 +214,7 @@ public class Vue extends JFrame implements Observer {
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
-                    // AttribuerImage(modele.plateau[i][j]);
-
+                    AttribuerImage(modele.plateau[i][j]);
                     this.setVisible(true);
                 } else {
                     plateau[i][j].setBackground(Color.WHITE);
