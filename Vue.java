@@ -43,7 +43,7 @@ public class Vue extends JFrame implements Observer {
             throw new RuntimeException(e);
         }
     }
-    public int listeImage[][];
+    public int listeImage[][] = new int[10][2];
 
     public int indicesX = 0;
     public int indicesY = 0;
