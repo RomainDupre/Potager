@@ -169,23 +169,23 @@ public class Vue extends JFrame implements Observer {
     {
         switch(uneCase.legume.getClass()) {
 
-            case Salade.class:
+            case Salades.class:
                 indicesX = listeImage[SALADE][0];
                 indicesY = listeImage[SALADE][1];
                 break;
-            case Chapignon.class:
+            case Chapignons.class:
                 indicesX = listeImage[CHAMPIGNON][0];
                 indicesY = listeImage[CHAMPIGNON][1];
                 break;
-            case Orange.class:
+            case Oranges.class:
                 indicesX = listeImage[ORANGE][0];
                 indicesY = listeImage[ORANGE][1];
                 break;
-            case Citron.class:
+            case Citrons.class:
                 indicesX = listeImage[CITRON][0];
                 indicesY = listeImage[CITRON][1];
                 break;
-            case Betterave.class:
+            case Betteraves.class:
                 indicesX = listeImage[BETTERAVE][0];
                 indicesY = listeImage[BETTERAVE][1];
                 break;
