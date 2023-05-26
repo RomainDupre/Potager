@@ -23,6 +23,8 @@ public abstract class Legumes {
 
     public abstract void pousser();
 
+    public abstract String getLabel();
+
     //getter and setter for this classe
 
     public float getMasse() {

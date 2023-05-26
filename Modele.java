@@ -10,7 +10,43 @@ import java.util.Observable;
 public class Modele extends Observable implements Runnable{
 
     public static final int TAILLE = 10;
+    private boolean isLegumeSelected = false;
+    private Legumes legumeSelected = null;
+    private boolean isToolsSelected = false;
+    private Object toolsSelected = null;
 
+    public boolean isLegumeSelected() {
+        return isLegumeSelected;
+    }
+
+    public void setLegumeSelected(boolean legumeSelected) {
+        isLegumeSelected = legumeSelected;
+    }
+
+    public Legumes getLegumeSelected() {
+        return legumeSelected;
+    }
+
+    public void setLegumeSelected(Legumes legumeSelected) {
+        this.legumeSelected = legumeSelected;
+        System.out.println("Legume selected: " + legumeSelected.getLabel());
+    }
+
+    public boolean isToolsSelected() {
+        return isToolsSelected;
+    }
+
+    public void setToolsSelected(boolean toolsSelected) {
+        isToolsSelected = toolsSelected;
+    }
+
+    public Object getToolsSelected() {
+        return toolsSelected;
+    }
+
+    public void setToolsSelected(Object toolsSelected) {
+        this.toolsSelected = toolsSelected;
+    }
 
     Case[][] plateau = new Case[TAILLE][TAILLE];
 
@@ -58,22 +94,7 @@ public class Modele extends Observable implements Runnable{
     public void plantLegumeInCase(int x, int y, Legumes legume){
         plateau[x][y].plantLegume(legume);
 
-       /* JLabel label = new JLabel(new ImageIcon(plateau[x][y].legume.image));
-        plateau[x][y].add(label);
-
-        */
         setChanged();
         notifyObservers();
     }
-
-
-
-    /*public void changeColor(int x, int y) {
-        plateau[x][y] = !plateau[x][y];
-        setChanged();
-        notifyObservers();
-    }*/
-
-
-
 }
