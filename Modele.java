@@ -92,9 +92,11 @@ public class Modele extends Observable implements Runnable{
     }
 
     public void plantLegumeInCase(int x, int y, Legumes legume){
-        plateau[x][y].plantLegume(legume);
-
-        setChanged();
-        notifyObservers();
+        if(!plateau[x][y].hasLegume()) {
+            plateau[x][y].plantLegume(legume);
+            setChanged();
+            notifyObservers();
+        }
     }
+
 }

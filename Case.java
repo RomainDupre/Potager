@@ -19,15 +19,12 @@ import javax.swing.*;
 public class Case extends JPanel implements Observer {
     int x;
     int y;
-
-    boolean iconeSet = false;
     public Legumes legume;
 
 
     public Case(int x, int y) {
         this.x = x;
         this.y = y;
-        this.iconeSet = false;
     }
 
     public Case(int x, int y, Legumes legume) {
@@ -39,14 +36,6 @@ public class Case extends JPanel implements Observer {
 
     public boolean hasLegume() {
         return legume != null;
-    }
-
-    public void isIconeSet(boolean b) {
-        this.iconeSet = b;
-    }
-
-    public boolean hasIcone() {
-        return this.iconeSet;
     }
 
     public void setLabel(String s) {

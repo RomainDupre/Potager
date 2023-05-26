@@ -1,4 +1,6 @@
-package blokus.LegumeModele;
+package blokus.ListeLegumes;
+
+import blokus.LegumeModele.Legumes;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,7 +26,7 @@ public class Tomates extends Legumes {
         super(masse, prix);
         BufferedImage image = ImageIO.read(new File("LegumeModele/data.png")); // chargement de l'image globale
 
-        BufferedImage tomate = image.getSubimage(0, 0, 160, 160); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
+        BufferedImage tomate = image.getSubimage(365, 0, 160, 160); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
 
         Image iconeTomate = tomate.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
         this.image = iconeTomate;

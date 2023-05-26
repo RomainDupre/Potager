@@ -6,19 +6,22 @@
 package blokus;
 
 import blokus.LegumeModele.Legumes;
-import blokus.LegumeModele.Tomates;
+import blokus.ListeLegumes.Tomates;
 
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
+
+import static blokus.ListeIndiceLegume.*;
 
 /**
  *
@@ -40,6 +43,13 @@ public class Vue extends JFrame implements Observer {
             throw new RuntimeException(e);
         }
     }
+    public int listeImage[][];
+
+    public int indicesX = 0;
+    public int indicesY = 0;
+
+    public Image iconeLegume;
+
 
     Vue(Modele modele) {
         super();
@@ -51,6 +61,15 @@ public class Vue extends JFrame implements Observer {
                 System.exit(0);
             }
         });
+        int x = 0;
+        int y = 0;
+        for(int i =0;i<10;i++)
+        {
+            listeImage[i][0] = x;
+            listeImage[i][1] = y;
+            x += 365;
+        }
+
         build();
 
     }
@@ -67,7 +86,6 @@ public class Vue extends JFrame implements Observer {
         // Window
         setTitle("Potager");
         setSize(400, 400);
-
         JComponent pan = new JPanel (new GridLayout(10,10));
         JComponent rightPanel = new JPanel(new GridLayout(5,10));
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, rightPanel);
@@ -146,15 +164,60 @@ public class Vue extends JFrame implements Observer {
         pan.setBorder(blackline);
         add(split);
     }
+
+    /*public void AttribuerImage(Case uneCase)
+    {
+        switch(uneCase.legume.getClass()) {
+
+            case Salade.class:
+                indicesX = listeImage[SALADE][0];
+                indicesY = listeImage[SALADE][1];
+                break;
+            case Chapignon.class:
+                indicesX = listeImage[CHAMPIGNON][0];
+                indicesY = listeImage[CHAMPIGNON][1];
+                break;
+            case Orange.class:
+                indicesX = listeImage[ORANGE][0];
+                indicesY = listeImage[ORANGE][1];
+                break;
+            case Citron.class:
+                indicesX = listeImage[CITRON][0];
+                indicesY = listeImage[CITRON][1];
+                break;
+            case Betterave.class:
+                indicesX = listeImage[BETTERAVE][0];
+                indicesY = listeImage[BETTERAVE][1];
+                break;
+        }
+
+
+        BufferedImage image = null; // chargement de l'image globale
+        try {
+            image = ImageIO.read(new File("LegumeModele/data.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        BufferedImage legume = image.getSubimage(indicesX ,indicesY, 160, 160); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
+
+        Image iconeLegume = legume.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
+
+        JLabel label = new JLabel(new ImageIcon(iconeLegume));
+        uneCase.add(label);
+    }
+
+     */
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("update done");
+        int indicesX = 0;
+        int indicesY = 0;
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
-                if (modele.plateau[i][j].hasLegume() && !modele.plateau[i][j].hasIcone()) {
-                    JLabel label = new JLabel(new ImageIcon(modele.plateau[i][j].legume.image));
-                    plateau[i][j].add(label);
-                    modele.plateau[i][j].isIconeSet(true);
+                if (modele.plateau[i][j].hasLegume()) {
+                    // AttribuerImage(modele.plateau[i][j]);
+
                     this.setVisible(true);
                 } else {
                     plateau[i][j].setBackground(Color.WHITE);
