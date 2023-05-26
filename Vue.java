@@ -113,6 +113,7 @@ public class Vue extends JFrame implements Observer {
                     JLabel label = new JLabel(new ImageIcon(modele.plateau[i][j].legume.image));
                     plateau[i][j].add(label);
                     modele.plateau[i][j].isIconeSet(true);
+                    this.setVisible(true);
                 } else {
                     plateau[i][j].setBackground(Color.WHITE);
                 }
