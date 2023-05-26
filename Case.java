@@ -16,7 +16,7 @@ import javax.swing.*;
  *
  * @author frederic
  */
-public class Case extends JPanel implements Observer {
+public class Case extends JLabel implements Observer {
     int x;
     int y;
     public Legumes legume;
@@ -25,6 +25,7 @@ public class Case extends JPanel implements Observer {
     public Case(int x, int y) {
         this.x = x;
         this.y = y;
+        setOpaque(true);
     }
 
     public Legumes getLegume() {
@@ -32,8 +33,9 @@ public class Case extends JPanel implements Observer {
     }
 
     public Case(int x, int y, Legumes legume) {
-        this.x = x;
-        this.y = y;
+        //this.x = x;
+        //this.y = y;
+        this(x, y);
         this.legume = legume;
 
     }

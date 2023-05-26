@@ -69,7 +69,7 @@ public class Vue extends JFrame implements Observer {
         {
             listeImage[i][0] = x;
             listeImage[i][1] = y;
-            x += 365;
+            x += 365 ;
         }
 
         build();
@@ -167,7 +167,7 @@ public class Vue extends JFrame implements Observer {
         add(split);
     }
 
-    public void AttribuerImage(Case uneCase)
+    public BufferedImage AttribuerImage(Case uneCase)
     {
         switch(uneCase.getLegume().getLabel()) {
 
@@ -201,12 +201,13 @@ public class Vue extends JFrame implements Observer {
             throw new RuntimeException(e);
         }
 
-        BufferedImage legume = image.getSubimage(indicesX ,indicesY, 160, 160); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
+        BufferedImage legume = image.getSubimage( indicesX,0, 365, 180); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
 
-        Image iconeLegume = legume.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
+        return legume;
+        //Image iconeLegume = legume.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
 
-        JLabel label = new JLabel(new ImageIcon(iconeLegume));
-        uneCase.add(label);
+        //JLabel label = new JLabel(new ImageIcon(iconeLegume));
+        //uneCase.add(label);
     }
 
 
@@ -218,8 +219,11 @@ public class Vue extends JFrame implements Observer {
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
-                    AttribuerImage(modele.plateau[i][j]);
-                    this.setVisible(true);
+                    BufferedImage im = AttribuerImage(modele.plateau[i][j]);
+                    Image iconeLegume = im.getScaledInstance(150, 100, Image.SCALE_SMOOTH); // icône redimentionnée
+                    plateau[i][j].setIcon(new ImageIcon(iconeLegume));
+                    //plateau[i][j].setBackground(Color.BLUE);
+                    //this.setVisible(true);
                 } else {
                     plateau[i][j].setBackground(Color.WHITE);
                 }

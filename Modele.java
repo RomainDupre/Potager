@@ -68,7 +68,7 @@ public class Modele extends Observable implements Runnable{
         }
 
 
-        //while(true) {
+        while(true) {
 
             try {
                 Thread.sleep(1000);
@@ -77,7 +77,7 @@ public class Modele extends Observable implements Runnable{
             }
             setChanged();
             notifyObservers();
-        //}
+        }
     }
 
     /**
