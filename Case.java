@@ -51,6 +51,12 @@ public class Case extends JLabel implements Observer {
         this.legume = legume;
     }
 
+    public void harvestLegume() {
+        this.legume = null;
+    }
+    public Legumes getLegume() {
+        return this.legume;
+    }
     @Override
     public void update(Observable o, Object arg) {
 
