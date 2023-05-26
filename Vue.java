@@ -14,6 +14,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import javax.imageio.ImageIO;
@@ -52,6 +54,8 @@ public class Vue extends JFrame implements Observer {
     public int indicesX = 0;
     public int indicesY = 0;
 
+    public Map hmap = new HashMap();
+
 
     Vue(Modele modele) {
         super();
@@ -77,6 +81,20 @@ public class Vue extends JFrame implements Observer {
     }
 
     public void build() {
+
+        BufferedImage image = null; // chargement de l'image globale
+        try {
+            image = ImageIO.read(new File("LegumeModele/data.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.hmap.put("Salade",image.getSubimage( 0,0, 365, 180));
+        this.hmap.put("Champignon",image.getSubimage( 365,0, 365, 180));
+        this.hmap.put("Orange",image.getSubimage( 730,0, 365, 180));
+        this.hmap.put("Citron",image.getSubimage( 1095,0, 365, 180));
+        this.hmap.put("Betterave",image.getSubimage( 1460,0, 365, 180));
+
         // Menu Bar
         JMenuBar jm = new JMenuBar();
         JMenu m = new JMenu("Jeu");
@@ -165,49 +183,31 @@ public class Vue extends JFrame implements Observer {
         }
         pan.setBorder(blackline);
         add(split);
+
+
     }
 
-    public BufferedImage AttribuerImage(Case uneCase)
+    public BufferedImage attribuerImage(Case uneCase)
     {
+        BufferedImage legume = null;
         switch(uneCase.getLegume().getLabel()) {
-
             case "Salade":
-                indicesX = listeImage[SALADE][0];
-                indicesY = listeImage[SALADE][1];
+                legume = (BufferedImage) this.hmap.get("Salade");
                 break;
             case "Champignon":
-                indicesX = listeImage[CHAMPIGNON][0];
-                indicesY = listeImage[CHAMPIGNON][1];
+                legume =(BufferedImage) this.hmap.get("Champignon");
                 break;
             case "Orange":
-                indicesX = listeImage[ORANGE][0];
-                indicesY = listeImage[ORANGE][1];
+                legume =(BufferedImage) this.hmap.get("Orange");
                 break;
             case "Citron":
-                indicesX = listeImage[CITRON][0];
-                indicesY = listeImage[CITRON][1];
+                legume =(BufferedImage) this.hmap.get("Citron");
                 break;
             case "Betterave":
-                indicesX = listeImage[BETTERAVE][0];
-                indicesY = listeImage[BETTERAVE][1];
+                legume = (BufferedImage) this.hmap.get("Betterave");
                 break;
         }
-
-
-        BufferedImage image = null; // chargement de l'image globale
-        try {
-            image = ImageIO.read(new File("LegumeModele/data.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        BufferedImage legume = image.getSubimage( indicesX,0, 365, 180); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
-
         return legume;
-        //Image iconeLegume = legume.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
-
-        //JLabel label = new JLabel(new ImageIcon(iconeLegume));
-        //uneCase.add(label);
     }
 
 
@@ -219,7 +219,7 @@ public class Vue extends JFrame implements Observer {
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
-                    BufferedImage im = AttribuerImage(modele.plateau[i][j]);
+                    BufferedImage im = attribuerImage(modele.plateau[i][j]);
                     Image iconeLegume = im.getScaledInstance(150, 100, Image.SCALE_SMOOTH); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
                     //plateau[i][j].setBackground(Color.BLUE);
