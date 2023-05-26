@@ -162,6 +162,7 @@ public class Vue extends JFrame implements Observer {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                    modele.setLegumeSelected(true);
+                   modele.setToolsSelected(false);
                    modele.setLegumeSelected(((LegumeCase)e.getSource()).getLegume());
                 }
 
@@ -229,24 +230,14 @@ public class Vue extends JFrame implements Observer {
 
     public BufferedImage attribuerImage(Case uneCase)
     {
-        BufferedImage legume = null;
-        switch(uneCase.getLegume().getLabel()) {
-            case "Salade":
-                legume = (BufferedImage) this.hmap.get("Salade");
-                break;
-            case "Champignon":
-                legume =(BufferedImage) this.hmap.get("Champignon");
-                break;
-            case "Orange":
-                legume =(BufferedImage) this.hmap.get("Orange");
-                break;
-            case "Citron":
-                legume =(BufferedImage) this.hmap.get("Citron");
-                break;
-            case "Betterave":
-                legume = (BufferedImage) this.hmap.get("Betterave");
-                break;
-        }
+        BufferedImage legume = switch (uneCase.getLegume().getLabel()) {
+            case "Salade" -> (BufferedImage) this.hmap.get("Salade");
+            case "Champignon" -> (BufferedImage) this.hmap.get("Champignon");
+            case "Orange" -> (BufferedImage) this.hmap.get("Orange");
+            case "Citron" -> (BufferedImage) this.hmap.get("Citron");
+            case "Betterave" -> (BufferedImage) this.hmap.get("Betterave");
+            default -> null;
+        };
         return legume;
     }
 
@@ -262,43 +253,9 @@ public class Vue extends JFrame implements Observer {
                     BufferedImage im = attribuerImage(modele.plateau[i][j]);
                     Image iconeLegume = im.getScaledInstance(150, 100, Image.SCALE_SMOOTH); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
-                    //plateau[i][j].setBackground(Color.BLUE);
-                    //this.setVisible(true);
                 } else {
-                    plateau[i][j].setVisible(false);
-                    plateau[i][j].removeAll();
-                    Case uneCase = new Case(i, j, null);
-                    uneCase.addMouseListener(new MouseListener() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            if(modele.isToolsSelected()) {
-                                modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
-                            } else {
-                                modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, modele.getLegumeSelected());
-                            }
-                        }
+                    plateau[i][j].setIcon(null);
 
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-
-                        }
-
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-
-                        }
-
-                        @Override
-                        public void mouseEntered(MouseEvent e) {
-
-                        }
-
-                        @Override
-                        public void mouseExited(MouseEvent e) {
-
-                        }
-                    });
-                    plateau[i][j].add(uneCase);
                     plateau[i][j].setVisible(true);
                 }
             }
