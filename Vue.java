@@ -7,6 +7,10 @@ package blokus;
 
 import blokus.LegumeModele.Legumes;
 import blokus.ListeLegumes.*;
+import blokus.Tools.Pelle;
+import blokus.Tools.Seau;
+import blokus.Tools.ToolCase;
+import blokus.Tools.Tools;
 
 import java.awt.*;
 
@@ -34,6 +38,10 @@ public class Vue extends JFrame implements Observer {
 
     public static Legumes[] legumes;
 
+    public static Tools[] tools = {
+        new Pelle(),
+        new Seau(),
+    };
     static {
         try {
             legumes = new Legumes[]{
@@ -98,6 +106,38 @@ public class Vue extends JFrame implements Observer {
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
         rightPanel.setBorder(blackline);
 
+        for (int i = 0; i < tools.length; i++){
+            ToolCase toolCase = new ToolCase(tools[i]);
+            toolCase.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    modele.setToolsSelected(true);
+                    modele.setLegumeSelected(false);
+                    modele.setToolsSelected(((ToolCase)e.getSource()).getTool());
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+            rightPanel.add(toolCase);
+        };
         // rightPanel should have each legume in a jlabel
         for (int i = 0; i < legumes.length; i++) {
             LegumeCase label = new LegumeCase(legumes[i]);
@@ -106,6 +146,7 @@ public class Vue extends JFrame implements Observer {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                    modele.setLegumeSelected(true);
+                   modele.setToolsSelected(false);
                    modele.setLegumeSelected(((LegumeCase)e.getSource()).getLegume());
                 }
 
@@ -135,9 +176,11 @@ public class Vue extends JFrame implements Observer {
                 uneCase.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-
-                        modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, modele.getLegumeSelected());
-                        //((Case)e.getSource()).setLabel("salade");
+                        if(modele.isToolsSelected()) {
+                            modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
+                        } else {
+                            modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, modele.getLegumeSelected());
+                        }
                     }
 
                     @Override
@@ -220,11 +263,45 @@ public class Vue extends JFrame implements Observer {
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
-                    // AttribuerImage(modele.plateau[i][j]);
-
+                    JLabel label = new JLabel(new ImageIcon(modele.plateau[i][j].legume.image));
+                    plateau[i][j].add(label);
                     this.setVisible(true);
                 } else {
-                    plateau[i][j].setBackground(Color.WHITE);
+                    plateau[i][j].setVisible(false);
+                    plateau[i][j].removeAll();
+                    Case uneCase = new Case(i, j, null);
+                    uneCase.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if(modele.isToolsSelected()) {
+                                modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
+                            } else {
+                                modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, modele.getLegumeSelected());
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+
+                        }
+                    });
+                    plateau[i][j].add(uneCase);
+                    plateau[i][j].setVisible(true);
                 }
             }
         }

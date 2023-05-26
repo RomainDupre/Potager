@@ -2,6 +2,7 @@ package blokus;
 
 import blokus.LegumeModele.Legumes;
 import blokus.ListeLegumes.Tomates;
+import blokus.Tools.Tools;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class Modele extends Observable implements Runnable{
     private boolean isLegumeSelected = false;
     private Legumes legumeSelected = null;
     private boolean isToolsSelected = false;
-    private Object toolsSelected = null;
+    private Tools toolsSelected = null;
 
     public boolean isLegumeSelected() {
         return isLegumeSelected;
@@ -40,11 +41,11 @@ public class Modele extends Observable implements Runnable{
         isToolsSelected = toolsSelected;
     }
 
-    public Object getToolsSelected() {
+    public Tools getToolsSelected() {
         return toolsSelected;
     }
 
-    public void setToolsSelected(Object toolsSelected) {
+    public void setToolsSelected(Tools toolsSelected) {
         this.toolsSelected = toolsSelected;
     }
 
@@ -94,6 +95,14 @@ public class Modele extends Observable implements Runnable{
     public void plantLegumeInCase(int x, int y, Legumes legume){
         if(!plateau[x][y].hasLegume()) {
             plateau[x][y].plantLegume(legume);
+            setChanged();
+            notifyObservers();
+        }
+    }
+
+    public void harverstLegumeInCase(int x, int y){
+        if(plateau[x][y].hasLegume()) {
+            plateau[x][y].harvestLegume();
             setChanged();
             notifyObservers();
         }
