@@ -41,7 +41,7 @@ public class Betteraves extends Legumes {
 
     @Override
     public String getLabel() {
-        return "Tomate";
+        return "Betterave";
     }
 
 

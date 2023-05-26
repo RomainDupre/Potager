@@ -41,7 +41,7 @@ public class Citrons extends Legumes {
 
     @Override
     public String getLabel() {
-        return "Tomate";
+        return "Citron";
     }
 
 

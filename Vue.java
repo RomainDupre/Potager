@@ -37,7 +37,11 @@ public class Vue extends JFrame implements Observer {
     static {
         try {
             legumes = new Legumes[]{
-                new Tomates()
+                new Salades(),
+                new Champignons(),
+                new Oranges(),
+                new Citrons(),
+                new Betteraves(),
             };
         } catch (IOException e) {
             throw new RuntimeException(e);

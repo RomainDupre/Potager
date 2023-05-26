@@ -41,7 +41,7 @@ public class Salades extends Legumes {
 
     @Override
     public String getLabel() {
-        return "Salades";
+        return "Salade";
     }
 
 
