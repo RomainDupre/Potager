@@ -6,7 +6,7 @@
 package blokus;
 
 import blokus.LegumeModele.Legumes;
-import blokus.ListeLegumes.Tomates;
+import blokus.ListeLegumes.*;
 
 import java.awt.*;
 
@@ -37,7 +37,11 @@ public class Vue extends JFrame implements Observer {
     static {
         try {
             legumes = new Legumes[]{
-                new Tomates()
+                new Salades(),
+                new Champignons(),
+                new Oranges(),
+                new Citrons(),
+                new Betteraves(),
             };
         } catch (IOException e) {
             throw new RuntimeException(e);
