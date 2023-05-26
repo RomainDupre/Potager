@@ -9,6 +9,7 @@ public abstract class Legumes {
     private float prix;
     private Maladie maladie;
     public Image image;
+
     public Legumes() {
         super();
     }
@@ -56,4 +57,6 @@ public abstract class Legumes {
     private Image getImage() {
         return image;
     }
+
+
 }

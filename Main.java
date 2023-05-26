@@ -5,7 +5,7 @@
 
 package blokus;
 
-import blokus.LegumeModele.Tomates;
+import blokus.ListeLegumes.Tomates;
 
 import javax.swing.SwingUtilities;
 import java.io.IOException;
