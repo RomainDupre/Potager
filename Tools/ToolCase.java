@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ToolCase extends JPanel implements Observer {
+public class ToolCase extends JLabel implements Observer {
     private Tools tool;
     private String label;
 

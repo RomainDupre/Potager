@@ -43,6 +43,7 @@ public class Vue extends JFrame implements Observer {
 
 
     private BufferedImage imageTerre;
+    private BufferedImage imageSceau;
     public static Tools[] tools = {
         new Pelle(),
         new Seau(),
@@ -107,11 +108,18 @@ public class Vue extends JFrame implements Observer {
             throw new RuntimeException(e);
         }
 
-        this.hmap.put("Salade",image.getSubimage( 0,0, 140, 132));
-        this.hmap.put("Champignon",image.getSubimage( 387,0, 140, 132));
-        this.hmap.put("Orange",image.getSubimage( 779,0, 140, 140));
-        this.hmap.put("Citron",image.getSubimage( 1150,0, 160, 132));
-        this.hmap.put("Betterave",image.getSubimage( 1550,0, 140, 132));
+        this.imageSceau = null; // chargement de l'image de la terre
+        try {
+            this.imageSceau = ImageIO.read(new File("LegumeModele/sceau.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.hmap.put("Salade",image.getSubimage( 0,0, 148, 159));
+        this.hmap.put("Champignon",image.getSubimage( 387,0, 148, 159));
+        this.hmap.put("Orange",image.getSubimage( 779,0, 148, 159));
+        this.hmap.put("Citron",image.getSubimage( 1150,0, 160, 159));
+        this.hmap.put("Betterave",image.getSubimage( 1550,0, 160, 159));
 
 
         // Menu Bar
@@ -136,6 +144,8 @@ public class Vue extends JFrame implements Observer {
 
         for (int i = 0; i < tools.length; i++){
             ToolCase toolCase = new ToolCase(tools[i]);
+            Image iconeLegume = imageSceau.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
+            toolCase.setIcon(new ImageIcon(iconeLegume));
             toolCase.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -169,6 +179,8 @@ public class Vue extends JFrame implements Observer {
         // rightPanel should have each legume in a jlabel
         for (int i = 0; i < legumes.length; i++) {
             LegumeCase label = new LegumeCase(legumes[i]);
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setVerticalAlignment(JLabel.CENTER);
             BufferedImage im = attribuerImage(legumes[i]);
             Image iconeLegume = im.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
             label.setIcon(new ImageIcon(iconeLegume));
@@ -236,6 +248,8 @@ public class Vue extends JFrame implements Observer {
                     }
                 });
                 uneCase.setBorder(blackline);
+                uneCase.setHorizontalAlignment(JLabel.CENTER);
+                uneCase.setVerticalAlignment(JLabel.CENTER);
                 plateau[i][j] = uneCase;
                 pan.add(uneCase);
             }
@@ -267,12 +281,11 @@ public class Vue extends JFrame implements Observer {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
                     BufferedImage im = attribuerImage(modele.plateau[i][j].getLegume());
-                    Image iconeLegume = im.getScaledInstance(30, 30, Image.SCALE_DEFAULT); // icône redimentionnée
+                    Image iconeLegume = im.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
                     plateau[i][j].setBackground(new Color(Integer.parseInt("#6d3305".substring(1), 16)));
                 } else {
-                    Image iconeLegume = imageTerre.getScaledInstance(200, 100, Image.SCALE_DEFAULT);
-                    //Image iconeLegume = imageTerre.getScaledInstance(200, 100, Image.SCALE_DEFAULT); // icône redimentionnée
+                    Image iconeLegume = imageTerre.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
 
                     plateau[i][j].setVisible(true);
