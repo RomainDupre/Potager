@@ -10,11 +10,18 @@ import java.io.IOException;
 
 public class Betteraves extends Legumes {
 
+    public int waterQota = 0;
+    public int sunQota = 0;
+    public int currentWater = 0;
+    public int currentSun = 0;
+    public float sunNeed = 0;
+    public float waterNeed = 0;
 
     public Betteraves() throws IOException {
 
 
         super(0, 0);
+
         BufferedImage image = ImageIO.read(new File("LegumeModele/data.png")); // chargement de l'image globale
 
         BufferedImage tomate = image.getSubimage(0, 0, 160, 160); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)

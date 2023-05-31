@@ -2,6 +2,7 @@ package blokus;
 
 import blokus.LegumeModele.Legumes;
 import blokus.ListeLegumes.Tomates;
+import blokus.Meteo.Meteo;
 import blokus.Tools.Tools;
 
 import javax.swing.*;
@@ -51,6 +52,8 @@ public class Modele extends Observable implements Runnable{
 
     Case[][] plateau = new Case[TAILLE][TAILLE];
 
+    public Meteo meteo = new Meteo(25, 80, 40);
+
 
     public Modele() {
         super();
@@ -73,6 +76,7 @@ public class Modele extends Observable implements Runnable{
 
             try {
                 Thread.sleep(1000);
+                meteo.updateClockTick();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
