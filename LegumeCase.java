@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class LegumeCase extends JPanel implements Observer {
+public class LegumeCase extends JLabel implements Observer {
     private Legumes legume;
     private String label;
 
