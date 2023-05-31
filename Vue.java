@@ -157,6 +157,10 @@ public class Vue extends JFrame implements Observer {
         // rightPanel should have each legume in a jlabel
         for (int i = 0; i < legumes.length; i++) {
             LegumeCase label = new LegumeCase(legumes[i]);
+            BufferedImage im = attribuerImage(legumes[i]);
+            Image iconeLegume = im.getScaledInstance(150, 100, Image.SCALE_SMOOTH); // icône redimentionnée
+            label.setIcon(new ImageIcon(iconeLegume));
+
 
             label.addMouseListener(new MouseListener() {
                 @Override
@@ -228,9 +232,9 @@ public class Vue extends JFrame implements Observer {
         add(split);
     }
 
-    public BufferedImage attribuerImage(Case uneCase)
+    public BufferedImage attribuerImage(Legumes unLegume)
     {
-        BufferedImage legume = switch (uneCase.getLegume().getLabel()) {
+        BufferedImage bf_legume = switch (unLegume.getLabel()) {
             case "Salade" -> (BufferedImage) this.hmap.get("Salade");
             case "Champignon" -> (BufferedImage) this.hmap.get("Champignon");
             case "Orange" -> (BufferedImage) this.hmap.get("Orange");
@@ -238,7 +242,7 @@ public class Vue extends JFrame implements Observer {
             case "Betterave" -> (BufferedImage) this.hmap.get("Betterave");
             default -> null;
         };
-        return legume;
+        return bf_legume;
     }
 
 
@@ -250,7 +254,7 @@ public class Vue extends JFrame implements Observer {
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
-                    BufferedImage im = attribuerImage(modele.plateau[i][j]);
+                    BufferedImage im = attribuerImage(modele.plateau[i][j].getLegume());
                     Image iconeLegume = im.getScaledInstance(150, 100, Image.SCALE_SMOOTH); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
                 } else {
