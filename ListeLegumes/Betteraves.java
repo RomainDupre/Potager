@@ -49,5 +49,9 @@ public class Betteraves extends Legumes {
         return croissance.waterConsumption;
     }
 
+    public int getCroissance() {
+        return croissance.getCroissance();
+    }
+
 
 }
