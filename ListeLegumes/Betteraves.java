@@ -1,5 +1,6 @@
 package blokus.ListeLegumes;
 
+import blokus.Croissance.Croissance;
 import blokus.LegumeModele.Legumes;
 
 import javax.imageio.ImageIO;
@@ -9,13 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Betteraves extends Legumes {
-
-    public int waterQota = 0;
-    public int sunQota = 0;
-    public int currentWater = 0;
-    public int currentSun = 0;
-    public float sunNeed = 0;
-    public float waterNeed = 0;
+    public Croissance croissance = new Croissance(75, 50, 25, 10, 5);
 
     public Betteraves() throws IOException {
 
@@ -42,13 +37,16 @@ public class Betteraves extends Legumes {
         System.out.println("Prix : " + prix);
         System.out.println(image);
     }
-    public void pousser() {
-        System.out.println("JE POUUUUUSSE!!!!!!!!!!!!!!");
+    public void pousser(float water, float sun) {
+        croissance.updateCroissance(water, sun);
     }
 
     @Override
     public String getLabel() {
         return "Betterave";
+    }
+    public float getConsumption() {
+        return croissance.waterConsumption;
     }
 
 

@@ -22,7 +22,7 @@ public abstract class Legumes {
         this.image = null;
     }
 
-    public abstract void pousser();
+    public abstract void pousser(float water, float sun);
 
     public abstract String getLabel();
 

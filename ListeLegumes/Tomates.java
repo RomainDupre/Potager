@@ -1,5 +1,6 @@
 package blokus.ListeLegumes;
 
+import blokus.Croissance.Croissance;
 import blokus.LegumeModele.Legumes;
 
 import javax.imageio.ImageIO;
@@ -9,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Tomates extends Legumes {
-
+    Croissance croissance = new Croissance(75, 50, 25, 10, 5);
 
     public Tomates() throws IOException {
 
@@ -26,8 +27,10 @@ public class Tomates extends Legumes {
         super(masse, prix);
 
     }
-    public void pousser() {
-        System.out.println("JE POUUUUUSSE!!!!!!!!!!!!!!");
+
+    @Override
+    public void pousser(float water, float sun) {
+        croissance.updateCroissance(water, sun);
     }
 
     @Override
