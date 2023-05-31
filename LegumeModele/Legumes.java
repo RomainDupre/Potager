@@ -14,6 +14,9 @@ public abstract class Legumes {
         super();
     }
 
+    public int getCroissance() {
+        return 0;
+    }
     public Legumes(float masse, float prix) {
         super();
         this.masse = masse;
