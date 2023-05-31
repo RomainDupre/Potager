@@ -38,5 +38,7 @@ public class Tomates extends Legumes {
         return "Tomate";
     }
 
-
+    public int getCroissance() {
+        return croissance.getCroissance();
+    }
 }

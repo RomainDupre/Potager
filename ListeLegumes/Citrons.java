@@ -48,5 +48,9 @@ public class Citrons extends Legumes {
         return "Citron";
     }
 
+    public int getCroissance() {
+        return croissance.getCroissance();
+    }
+
 
 }

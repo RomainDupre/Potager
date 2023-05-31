@@ -42,7 +42,9 @@ public class Champignons extends Legumes {
     public void pousser(float water, float sun) {
         croissance.updateCroissance(water, sun);
     }
-
+    public int getCroissance() {
+        return croissance.getCroissance();
+    }
 
     @Override
     public String getLabel() {

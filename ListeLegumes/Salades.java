@@ -43,6 +43,9 @@ public class Salades extends Legumes {
         croissance.updateCroissance(water, sun);
     }
 
+    public int getCroissance() {
+        return croissance.getCroissance();
+    }
 
     @Override
     public String getLabel() {

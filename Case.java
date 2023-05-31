@@ -21,6 +21,8 @@ public class Case extends JLabel implements Observer {
     int y;
     public Legumes legume;
 
+    float humidity = 0;
+
 
     public Case(int x, int y) {
         this.x = x;
