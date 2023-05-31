@@ -97,4 +97,12 @@ public class Meteo {
         afficher();
     }
 
+    public float getCurrentHumidite() {
+        return currentHumidite;
+    }
+
+    public float getCurrentTemperature() {
+        return currentTemperature;
+    }
+
 }

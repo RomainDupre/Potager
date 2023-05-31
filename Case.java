@@ -41,6 +41,12 @@ public class Case extends JLabel implements Observer {
         this.legume = legume;
 
     }
+    public int getCroissance() {
+        if (legume != null) {
+            return legume.getCroissance();
+        }
+        return 0;
+    }
 
     public boolean hasLegume() {
         return legume != null;
@@ -57,9 +63,9 @@ public class Case extends JLabel implements Observer {
         this.legume = null;
     }
 
-    public void grow(float water, float sun) {
+    public void grow(float sun) {
         if (legume != null) {
-            legume.pousser(water, sun);
+            legume.pousser(humidity, sun);
         }
     }
     @Override

@@ -281,7 +281,8 @@ public class Vue extends JFrame implements Observer {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
                     BufferedImage im = attribuerImage(modele.plateau[i][j].getLegume());
-                    Image iconeLegume = im.getScaledInstance(30, 30, Image.SCALE_SMOOTH); // icône redimentionnée
+                    int croissance = modele.plateau[i][j].getLegume().getCroissance();
+                    Image iconeLegume = im.getScaledInstance(30 + 70 * croissance / 100, 30 + 60 * croissance / 100, Image.SCALE_SMOOTH); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
                     plateau[i][j].setBackground(new Color(Integer.parseInt("#6d3305".substring(1), 16)));
                 } else {
