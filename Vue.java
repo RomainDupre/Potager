@@ -28,6 +28,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import static blokus.ListeIndiceLegume.*;
+import static java.awt.Color.blue;
 
 /**
  *
@@ -40,6 +41,8 @@ public class Vue extends JFrame implements Observer {
 
     public static Legumes[] legumes;
 
+
+    private BufferedImage imageTerre;
     public static Tools[] tools = {
         new Pelle(),
         new Seau(),
@@ -97,11 +100,19 @@ public class Vue extends JFrame implements Observer {
             throw new RuntimeException(e);
         }
 
-        this.hmap.put("Salade",image.getSubimage( 0,0, 365, 180));
-        this.hmap.put("Champignon",image.getSubimage( 365,0, 365, 180));
-        this.hmap.put("Orange",image.getSubimage( 730,0, 365, 180));
-        this.hmap.put("Citron",image.getSubimage( 1095,0, 365, 180));
-        this.hmap.put("Betterave",image.getSubimage( 1460,0, 365, 180));
+        this.imageTerre = null; // chargement de l'image de la terre
+        try {
+            this.imageTerre = ImageIO.read(new File("LegumeModele/TerreSec.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.hmap.put("Salade",image.getSubimage( 0,0, 140, 132));
+        this.hmap.put("Champignon",image.getSubimage( 387,0, 140, 132));
+        this.hmap.put("Orange",image.getSubimage( 779,0, 140, 140));
+        this.hmap.put("Citron",image.getSubimage( 1150,0, 160, 132));
+        this.hmap.put("Betterave",image.getSubimage( 1550,0, 140, 132));
+
 
         // Menu Bar
         JMenuBar jm = new JMenuBar();
@@ -113,12 +124,13 @@ public class Vue extends JFrame implements Observer {
 
         // Window
         setTitle("Potager");
-        setSize(400, 400);
+        setSize(1920, 1080);
+        JComponent JPanel = new JPanel();
         JComponent pan = new JPanel (new GridLayout(10,10));
         JComponent rightPanel = new JPanel(new GridLayout(5,10));
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, rightPanel);
 
-        split.setDividerLocation(300);
+        split.setDividerLocation(1100);
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
         rightPanel.setBorder(blackline);
 
@@ -158,7 +170,7 @@ public class Vue extends JFrame implements Observer {
         for (int i = 0; i < legumes.length; i++) {
             LegumeCase label = new LegumeCase(legumes[i]);
             BufferedImage im = attribuerImage(legumes[i]);
-            Image iconeLegume = im.getScaledInstance(150, 100, Image.SCALE_SMOOTH); // icône redimentionnée
+            Image iconeLegume = im.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
             label.setIcon(new ImageIcon(iconeLegume));
 
 
@@ -229,7 +241,7 @@ public class Vue extends JFrame implements Observer {
             }
         }
         pan.setBorder(blackline);
-        add(split);
+       add(split);
     }
 
     public BufferedImage attribuerImage(Legumes unLegume)
@@ -255,10 +267,13 @@ public class Vue extends JFrame implements Observer {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
                     BufferedImage im = attribuerImage(modele.plateau[i][j].getLegume());
-                    Image iconeLegume = im.getScaledInstance(150, 100, Image.SCALE_SMOOTH); // icône redimentionnée
+                    Image iconeLegume = im.getScaledInstance(30, 30, Image.SCALE_DEFAULT); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
+                    plateau[i][j].setBackground(new Color(Integer.parseInt("#6d3305".substring(1), 16)));
                 } else {
-                    plateau[i][j].setIcon(null);
+                    Image iconeLegume = imageTerre.getScaledInstance(200, 100, Image.SCALE_DEFAULT);
+                    //Image iconeLegume = imageTerre.getScaledInstance(200, 100, Image.SCALE_DEFAULT); // icône redimentionnée
+                    plateau[i][j].setIcon(new ImageIcon(iconeLegume));
 
                     plateau[i][j].setVisible(true);
                 }
