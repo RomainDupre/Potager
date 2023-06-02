@@ -77,6 +77,7 @@ public class Modele extends Observable implements Runnable{
             try {
                 Thread.sleep(1000);
                 meteo.updateClockTick();
+                refreshPlateau();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -96,6 +97,15 @@ public class Modele extends Observable implements Runnable{
         }
     }
 
+    private void refreshPlateau(){
+        for(int i = 0; i < plateau.length; i++){
+            for(int j = 0; j < plateau[i].length; j++){
+                plateau[i][j].humidity = meteo.getCurrentHumidite();
+                float sun = meteo.getCurrentTemperature();
+                plateau[i][j].grow(sun);
+            }
+        }
+    }
     public void plantLegumeInCase(int x, int y, Legumes legume){
         if(!plateau[x][y].hasLegume()) {
             plateau[x][y].plantLegume(legume);
