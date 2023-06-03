@@ -17,6 +17,8 @@ public class Modele extends Observable implements Runnable{
     private boolean isToolsSelected = false;
     private Tools toolsSelected = null;
 
+    public Stock monStock;
+
     public boolean isLegumeSelected() {
         return isLegumeSelected;
     }
@@ -49,6 +51,7 @@ public class Modele extends Observable implements Runnable{
     public void setToolsSelected(Tools toolsSelected) {
         this.toolsSelected = toolsSelected;
     }
+
 
     Case[][] plateau = new Case[TAILLE][TAILLE];
 
@@ -116,6 +119,8 @@ public class Modele extends Observable implements Runnable{
 
     public void harverstLegumeInCase(int x, int y){
         if(plateau[x][y].hasLegume()) {
+            monStock.RecolterUnLegume(plateau[x][y].getLegume());
+            System.out.println(monStock.GetNbrLegumeEnStock(plateau[x][y].getLegume()));
             plateau[x][y].harvestLegume();
             setChanged();
             notifyObservers();

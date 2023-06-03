@@ -44,8 +44,8 @@ public class Vue extends JFrame implements Observer {
 
     private BufferedImage imageTerre;
     private BufferedImage imageSceau;
-
     private BufferedImage imagePelle;
+
     public static Tools[] tools = {
         new Pelle(),
         new Seau(),
@@ -65,11 +65,8 @@ public class Vue extends JFrame implements Observer {
     }
     public int listeImage[][] = new int[10][2];
 
-    public int indicesX = 0;
-    public int indicesY = 0;
 
     public Map hmap = new HashMap();
-
 
     Vue(Modele modele) {
         super();
@@ -130,6 +127,7 @@ public class Vue extends JFrame implements Observer {
         this.hmap.put("Citron",image.getSubimage( 1150,0, 160, 159));
         this.hmap.put("Betterave",image.getSubimage( 1550,0, 160, 159));
 
+        modele.monStock = new Stock(legumes);
 
         // Menu Bar
         JMenuBar jm = new JMenuBar();
@@ -142,14 +140,38 @@ public class Vue extends JFrame implements Observer {
         // Window
         setTitle("Potager");
         setSize(1920, 1080);
-        JComponent JPanel = new JPanel();
+        JComponent panelRight = new JPanel();
         JComponent pan = new JPanel (new GridLayout(10,10));
-        JComponent rightPanel = new JPanel(new GridLayout(5,10));
-        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, rightPanel);
+        JComponent panelPlantation = new JPanel(new GridLayout(2,10));
+        panelPlantation.setSize(20,400);
+       // panelPlantation.setLayout(new BorderLayout());
+       JComponent panelRecolte = new JPanel(new GridLayout(3,10));
+        panelRight.add(panelPlantation);
+        panelRight.add(panelRecolte,"span");
+
+        Border blackline = BorderFactory.createLineBorder(Color.black,1);
+        panelRight.setBorder(blackline);
+        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, panelRight);
 
         split.setDividerLocation(1100);
-        Border blackline = BorderFactory.createLineBorder(Color.black,1);
-        rightPanel.setBorder(blackline);
+        panelPlantation.setBorder(blackline);
+        panelRecolte.setBorder(blackline);
+
+
+        for (int j = 0; j < legumes.length; j++) {
+            LegumeCase label = new LegumeCase(legumes[j]);
+            modele.monStock.mesLegumesEnStocks[j] = label.getLegume();
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setVerticalAlignment(JLabel.CENTER);
+            BufferedImage im = attribuerImage(legumes[j]);
+            Image iconeLegume = im.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
+            label.setIcon(new ImageIcon(iconeLegume));
+            System.out.print(label);
+            panelRecolte.add(label);
+            panelRecolte.add(new Label ("x" + Integer.toString(modele.monStock.GetNbrLegumeEnStock(label.getLegume()))));
+
+        }
+
 
         for (int i = 0; i < tools.length; i++){
             ToolCase toolCase = new ToolCase(tools[i]);
@@ -167,7 +189,6 @@ public class Vue extends JFrame implements Observer {
                 toolCase.setHorizontalAlignment(JLabel.CENTER);
                 toolCase.setVerticalAlignment(JLabel.CENTER);
             }
-
 
             toolCase.addMouseListener(new MouseListener() {
                 @Override
@@ -197,9 +218,9 @@ public class Vue extends JFrame implements Observer {
 
                 }
             });
-            rightPanel.add(toolCase);
+            panelPlantation.add(toolCase);
         };
-        // rightPanel should have each legume in a jlabel
+        // panelPlantation should have each legume in a jlabel
         for (int i = 0; i < legumes.length; i++) {
             LegumeCase label = new LegumeCase(legumes[i]);
             label.setHorizontalAlignment(JLabel.CENTER);
@@ -234,7 +255,7 @@ public class Vue extends JFrame implements Observer {
 
                 }
             });
-            rightPanel.add(label);
+            panelPlantation.add(label);
         }
 
         for(int i = 0; i<modele.plateau.length; i++){
@@ -245,8 +266,54 @@ public class Vue extends JFrame implements Observer {
                     public void mouseClicked(MouseEvent e) {
                         if(modele.isToolsSelected()) {
                             modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
+
+
                         } else {
-                            modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, modele.getLegumeSelected());
+                            String legumeLabel = modele.getLegumeSelected().getLabel();
+                            Legumes monLegumeClique = null;
+                            switch(legumeLabel){
+                                case "Orange":
+                                    try {
+                                        monLegumeClique = new Oranges();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                    break;
+                                case "Champignon":
+                                    try {
+                                        monLegumeClique = new Champignons();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                    break;
+                                case "Citron":
+                                    try {
+                                        monLegumeClique = new Citrons();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                    break;
+                                case "Salade":
+                                    try {
+                                        monLegumeClique = new Salades();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }break;
+                                case "Tomate":
+                                    try {
+                                        monLegumeClique = new Tomates();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }break;
+                                case "Betterave":
+                                    try {
+                                        monLegumeClique = new Betteraves();
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }break;
+                            }
+                                modele.plantLegumeInCase(((Case)e.getSource()).x, ((Case)e.getSource()).y, monLegumeClique);
+
                         }
                     }
 
@@ -294,12 +361,15 @@ public class Vue extends JFrame implements Observer {
         return bf_legume;
     }
 
-
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("update done");
-        int indicesX = 0;
-        int indicesY = 0;
+       /* if(modele.getLegumeRecolte() != null) {
+
+
+        }
+
+        */
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
