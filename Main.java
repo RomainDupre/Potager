@@ -26,11 +26,6 @@ public class Main {
 				Modele m = new Modele();
 				Vue fenetre = new Vue(m);
 				m.addObserver(fenetre);
-				try {
-					Tomates tomates = new Tomates(10.0F, 10.0f);
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
 				fenetre.setVisible(true);//On la rend visible
 			}
 		});

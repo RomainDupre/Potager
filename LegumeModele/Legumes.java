@@ -1,38 +1,31 @@
 package blokus.LegumeModele;
 
+import blokus.Croissance.Croissance;
 import blokus.Maladie;
 
 import java.awt.*;
 
 public abstract class Legumes {
-    private float masse;
-    private float prix;
-    private Maladie maladie;
-    public Image image;
+    private float masse = 0;
+    private float prix = 0;
+    private Maladie maladie = null;
+    public Image image = null;
+
+    public Croissance croissance;
 
     public Legumes() {
         super();
     }
 
-    public int getCroissance() {
-        return 0;
-    }
-    public Legumes(float masse, float prix) {
+    public Legumes(Croissance croissance) {
         super();
-        this.masse = masse;
-        this.prix = prix;
-        this.maladie = null;
-        this.maladie = null;
-        this.image = null;
+        this.croissance = croissance;
+
     }
 
     public abstract void pousser(float water, float sun);
 
-    public void arroser()
-    {
-
-    }
-
+    public abstract int getCroissance();
     public abstract String getLabel();
 
     //getter and setter for this classe

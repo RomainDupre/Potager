@@ -15,6 +15,7 @@ public class Modele extends Observable implements Runnable{
     private Legumes legumeSelected = null;
     private boolean isToolsSelected = false;
     private Tools toolsSelected = null;
+    private Maladie[] maladies = new Maladie[1];
 
     public Stock monStock;
 
@@ -94,6 +95,7 @@ public class Modele extends Observable implements Runnable{
      * Modify the plateau to random values
      */
     public void Init() throws IOException {
+        this.maladies[0] = new Maladie(1, "Maladie de plante", "La plante arrête sa croissance et peut contaminer els autres palntes", 3);
         for (int i = 0; i < TAILLE; i++) {
             for (int j = 0; j < TAILLE; j++) {
                 plateau[i][j] = new Case(10, 10, null);
@@ -104,9 +106,45 @@ public class Modele extends Observable implements Runnable{
     private void refreshPlateau(){
         for(int i = 0; i < plateau.length; i++){
             for(int j = 0; j < plateau[i].length; j++){
-                plateau[i][j].humidity = meteo.getCurrentHumidite();
-                float sun = meteo.getCurrentTemperature();
-                plateau[i][j].grow(sun);
+                if(plateau[i][j].hasLegume()) {
+                    for(int k = 0; k < maladies.length; k++){
+                        int random = (int)(Math.random() * 100);
+                        if(random < maladies[k].getProbabilite()){
+                            plateau[i][j].getLegume().setMaladie(maladies[k]);
+                        }
+                    }
+
+                    if(plateau[i][j].legume.getMaladie() != null){
+                        int random2 = (int)(Math.random() * 100);
+                        if(random2 > plateau[i][j].legume.getMaladie().getPropagation()){
+                            int random3 = (int)(Math.random() * 3);
+                            switch (random3){
+                                case 0:
+                                    if(plateau[i-1][j].legume != null)
+                                    plateau[i-1][j].legume.setMaladie(plateau[i][j].legume.getMaladie());
+                                case 1:
+                                    if(plateau[i+1][j].legume != null)
+                                    plateau[i+1][j].legume.setMaladie(plateau[i][j].legume.getMaladie());
+                                case 2:
+                                    if(plateau[i][j-1].legume != null)
+                                    plateau[i][j-1].legume.setMaladie(plateau[i][j].legume.getMaladie());
+                                case 3:
+                                    if(plateau[i][j+1].legume != null)
+                                    plateau[i][j+1].legume.setMaladie(plateau[i][j].legume.getMaladie());
+                            }
+                        }
+                    }
+
+                    if(plateau[i][j].humidity < meteo.getCurrentHumidite()) {
+                        plateau[i][j].humidity = meteo.getCurrentHumidite();
+                    }
+                    float sun = meteo.getCurrentTemperature();
+
+                    if(plateau[i][j].legume.getMaladie() == null) {
+                        plateau[i][j].grow(sun);
+                    }
+                }
+
             }
         }
     }

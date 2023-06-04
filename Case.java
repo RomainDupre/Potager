@@ -72,6 +72,7 @@ public class Case extends JLabel implements Observer {
     public void grow(float sun) {
         if (legume != null) {
             legume.pousser(humidity, sun);
+            this.humidity -= this.legume.croissance.waterConsumption;
         }
     }
     @Override

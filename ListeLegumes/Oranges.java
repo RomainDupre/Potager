@@ -14,28 +14,7 @@ public class Oranges extends Legumes {
 
     public Croissance croissance = new Croissance(75, 50, 25, 10, 5);
     public Oranges() throws IOException {
-
-
-        super(0, 0);
-        BufferedImage image = ImageIO.read(new File("LegumeModele/data.png")); // chargement de l'image globale
-
-        BufferedImage tomate = image.getSubimage(0, 0, 160, 160); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
-
-        Image iconeTomate = tomate.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
-        this.image = iconeTomate;
-    }
-    public Oranges(float masse, float prix) throws IOException {
-        super(masse, prix);
-        BufferedImage image = ImageIO.read(new File("LegumeModele/data.png")); // chargement de l'image globale
-
-        BufferedImage tomate = image.getSubimage(365, 0, 160, 160); // image du légume le légume (x, y : coin supérieur gauche, w, h : largeur et hauteur)
-
-        Image iconeTomate = tomate.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
-        this.image = iconeTomate;
-        System.out.println("Tomate créée");
-        System.out.println("Masse : " + masse);
-        System.out.println("Prix : " + prix);
-        System.out.println(image);
+        super(new Croissance(75, 50, 25, 10, 5));
     }
 
     @Override
@@ -51,11 +30,4 @@ public class Oranges extends Legumes {
     public String getLabel() {
         return "Orange";
     }
-
-    public void arroser()
-    {
-        this.croissance.currentWater = (int)this.croissance.waterNeed;
-    }
-
-
 }

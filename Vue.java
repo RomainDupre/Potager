@@ -450,8 +450,9 @@ public class Vue extends JFrame implements Observer {
                     if(modele.plateau[i][j].getLegume().getCroissance() == 100)
                     {
                          im =  filtreVert(attribuerImage(modele.plateau[i][j].getLegume()));
-                    }
-                    else
+                    } else if (modele.plateau[i][j].getLegume().getMaladie() != null) {
+                        im = filtreRouge(attribuerImage(modele.plateau[i][j].getLegume()));
+                    } else
                     {
                          im = attribuerImage(modele.plateau[i][j].getLegume());
                     }
