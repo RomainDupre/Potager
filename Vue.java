@@ -7,6 +7,8 @@ package blokus;
 
 import blokus.LegumeModele.Legumes;
 import blokus.ListeLegumes.*;
+import blokus.RecolteLegume.LegumesRecolte;
+import blokus.RecolteLegume.Stock;
 import blokus.Tools.Pelle;
 import blokus.Tools.Seau;
 import blokus.Tools.ToolCase;
@@ -27,9 +29,6 @@ import javax.swing.*;
 
 import javax.swing.border.Border;
 
-import static blokus.ListeIndiceLegume.*;
-import static java.awt.Color.blue;
-
 /**
  *
  * @author frederic
@@ -40,6 +39,8 @@ public class Vue extends JFrame implements Observer {
     private Case[][] plateau = new Case[Modele.TAILLE][Modele.TAILLE];
 
     public static Legumes[] legumes;
+
+    public  LegumesRecolte[] tableauRecolte = new LegumesRecolte[legumes.length];
 
 
     private BufferedImage imageTerre;
@@ -93,39 +94,8 @@ public class Vue extends JFrame implements Observer {
 
     public void build() {
 
-        BufferedImage image = null; // chargement de l'image globale
-        try {
-            image = ImageIO.read(new File("LegumeModele/data.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-        this.imageTerre = null; // chargement de l'image de la terre
-        try {
-            this.imageTerre = ImageIO.read(new File("LegumeModele/TerreSec.jpg"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        this.imageSceau = null; // chargement de l'image de la terre
-        try {
-            this.imageSceau = ImageIO.read(new File("LegumeModele/sceau.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        this.imagePelle = null; // chargement de l'image de la terre
-        try {
-            this.imagePelle = ImageIO.read(new File("LegumeModele/pelle.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        this.hmap.put("Salade",image.getSubimage( 0,0, 148, 159));
-        this.hmap.put("Champignon",image.getSubimage( 387,0, 148, 159));
-        this.hmap.put("Orange",image.getSubimage( 779,0, 148, 159));
-        this.hmap.put("Citron",image.getSubimage( 1150,0, 160, 159));
-        this.hmap.put("Betterave",image.getSubimage( 1550,0, 160, 159));
+        ChargerLesImages();
 
         modele.monStock = new Stock(legumes);
 
@@ -140,39 +110,47 @@ public class Vue extends JFrame implements Observer {
         // Window
         setTitle("Potager");
         setSize(1920, 1080);
+
+        //panel on the right
         JComponent panelRight = new JPanel();
+        //panel for plant legumes
         JComponent pan = new JPanel (new GridLayout(10,10));
-        JComponent panelPlantation = new JPanel(new GridLayout(2,10));
+        //panel to select each legume to plant
+        JComponent panelPlantation = new JPanel(new GridLayout(4,10));
         panelPlantation.setSize(20,400);
-       // panelPlantation.setLayout(new BorderLayout());
+        //panel to see all recolted legume
        JComponent panelRecolte = new JPanel(new GridLayout(3,10));
         panelRight.add(panelPlantation);
         panelRight.add(panelRecolte,"span");
 
+        //add split bar
+        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, panelRight);
+        split.setDividerLocation(1100);
+
+        //style
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
         panelRight.setBorder(blackline);
-        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, panelRight);
-
-        split.setDividerLocation(1100);
-        panelPlantation.setBorder(blackline);
         panelRecolte.setBorder(blackline);
 
 
+        /// SHOW IMAGE ///
+
+        //Create recolte legume panel with all legume we have
         for (int j = 0; j < legumes.length; j++) {
-            LegumeCase label = new LegumeCase(legumes[j]);
+            LegumesRecolte label = new LegumesRecolte(legumes[j]);
             modele.monStock.mesLegumesEnStocks[j] = label.getLegume();
+            this.tableauRecolte[j]= label;
             label.setHorizontalAlignment(JLabel.CENTER);
             label.setVerticalAlignment(JLabel.CENTER);
             BufferedImage im = attribuerImage(legumes[j]);
             Image iconeLegume = im.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // icône redimentionnée
             label.setIcon(new ImageIcon(iconeLegume));
-            System.out.print(label);
             panelRecolte.add(label);
-            panelRecolte.add(new Label ("x" + Integer.toString(modele.monStock.GetNbrLegumeEnStock(label.getLegume()))));
+            panelRecolte.add(label.getNbrLegumeRecolte());
 
         }
 
-
+        //create tool panel
         for (int i = 0; i < tools.length; i++){
             ToolCase toolCase = new ToolCase(tools[i]);
             if(toolCase.getLabel() =="Sceau")
@@ -220,6 +198,7 @@ public class Vue extends JFrame implements Observer {
             });
             panelPlantation.add(toolCase);
         };
+
         // panelPlantation should have each legume in a jlabel
         for (int i = 0; i < legumes.length; i++) {
             LegumeCase label = new LegumeCase(legumes[i]);
@@ -258,6 +237,7 @@ public class Vue extends JFrame implements Observer {
             panelPlantation.add(label);
         }
 
+        //Garden
         for(int i = 0; i<modele.plateau.length; i++){
             for (int j = 0; j<modele.plateau[i].length;j++){
                 Case uneCase = new Case(i, j, null);
@@ -265,8 +245,7 @@ public class Vue extends JFrame implements Observer {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         if(modele.isToolsSelected()) {
-                            modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
-
+                            if(modele.getToolsSelected().getLabel()== "Pelle") modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
 
                         } else {
                             String legumeLabel = modele.getLegumeSelected().getLabel();
@@ -361,15 +340,52 @@ public class Vue extends JFrame implements Observer {
         return bf_legume;
     }
 
+    public void afficherLesImage()
+    {
+
+    }
+    public void ChargerLesImages()
+    {
+        BufferedImage image = null; // chargement de l'image globale
+        try {
+            image = ImageIO.read(new File("LegumeModele/data.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.imageTerre = null; // chargement de l'image de la terre
+        try {
+            this.imageTerre = ImageIO.read(new File("LegumeModele/TerreSec.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.imageSceau = null; // chargement de l'image de la terre
+        try {
+            this.imageSceau = ImageIO.read(new File("LegumeModele/sceau.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.imagePelle = null; // chargement de l'image de la terre
+        try {
+            this.imagePelle = ImageIO.read(new File("LegumeModele/pelle.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.hmap.put("Salade",image.getSubimage( 0,0, 148, 159));
+        this.hmap.put("Champignon",image.getSubimage( 387,0, 148, 159));
+        this.hmap.put("Orange",image.getSubimage( 779,0, 148, 159));
+        this.hmap.put("Citron",image.getSubimage( 1150,0, 160, 159));
+        this.hmap.put("Betterave",image.getSubimage( 1550,0, 160, 159));
+
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("update done");
-       /* if(modele.getLegumeRecolte() != null) {
 
-
-        }
-
-        */
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
@@ -381,10 +397,14 @@ public class Vue extends JFrame implements Observer {
                 } else {
                     Image iconeLegume = imageTerre.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
-
                     plateau[i][j].setVisible(true);
                 }
             }
+        }
+
+        for(int i = 0; i <tableauRecolte.length; i++) {
+            tableauRecolte[i].setNbrLegumeRecolte(modele.monStock.GetNbrLegumeEnStock(tableauRecolte[i].getLegume()));
+            System.out.println(tableauRecolte[i].getNbrLegumeRecolte().getText());
         }
     }
 }

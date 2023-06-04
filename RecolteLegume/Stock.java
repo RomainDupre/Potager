@@ -1,10 +1,12 @@
-package blokus;
+package blokus.RecolteLegume;
 
 import blokus.LegumeModele.Legumes;
 
-public class Stock {
+import java.util.Observable;
 
-    public Legumes[] mesLegumesEnStocks = new Legumes [10];
+public class Stock extends Observable {
+
+    public Legumes[] mesLegumesEnStocks ;
 
     private int[] QuanitéDeLegumeEnStock = new int [10];
 
@@ -20,8 +22,11 @@ public class Stock {
             if(mesLegumesEnStocks[i].getLabel() == legume.getLabel())
             {
                 QuanitéDeLegumeEnStock[i]++;
+                this.setChanged();
+                this.notifyObservers();
             }
         }
+
     }
 
     public int GetNbrLegumeEnStock(Legumes legume)

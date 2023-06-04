@@ -1,11 +1,10 @@
 package blokus;
 
 import blokus.LegumeModele.Legumes;
-import blokus.ListeLegumes.Tomates;
 import blokus.Meteo.Meteo;
+import blokus.RecolteLegume.Stock;
 import blokus.Tools.Tools;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Observable;
 
