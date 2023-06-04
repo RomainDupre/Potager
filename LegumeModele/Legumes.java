@@ -27,6 +27,11 @@ public abstract class Legumes {
 
     public abstract void pousser(float water, float sun);
 
+    public void arroser()
+    {
+
+    }
+
     public abstract String getLabel();
 
     //getter and setter for this classe

@@ -52,5 +52,10 @@ public class Citrons extends Legumes {
         return croissance.getCroissance();
     }
 
+    public void arroser()
+    {
+        this.croissance.currentWater = (int)this.croissance.waterNeed;
+    }
+
 
 }

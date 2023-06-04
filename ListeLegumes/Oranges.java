@@ -52,5 +52,10 @@ public class Oranges extends Legumes {
         return "Orange";
     }
 
+    public void arroser()
+    {
+        this.croissance.currentWater = (int)this.croissance.waterNeed;
+    }
+
 
 }

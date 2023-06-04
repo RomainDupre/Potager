@@ -53,5 +53,12 @@ public class Betteraves extends Legumes {
         return croissance.getCroissance();
     }
 
+    public void arroser()
+    {
+        this.croissance.currentWater = (int)this.croissance.waterNeed;
+        System.out.println(Float.toString(this.croissance.waterNeed));
+        System.out.println(Integer.toString(this.croissance.currentWater));
+    }
+
 
 }

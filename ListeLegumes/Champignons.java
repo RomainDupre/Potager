@@ -51,5 +51,10 @@ public class Champignons extends Legumes {
         return "Champignon";
     }
 
+    public void arroser()
+    {
+        this.croissance.currentWater = (int)this.croissance.waterNeed;
+    }
+
 
 }

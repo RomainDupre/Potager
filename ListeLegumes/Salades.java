@@ -52,5 +52,10 @@ public class Salades extends Legumes {
         return "Salade";
     }
 
+    public void arroser()
+    {
+        this.croissance.currentWater = (int)this.croissance.waterNeed;
+    }
+
 
 }

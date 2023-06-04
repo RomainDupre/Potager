@@ -246,7 +246,10 @@ public class Vue extends JFrame implements Observer {
                     public void mouseClicked(MouseEvent e) {
                         if(modele.isToolsSelected()) {
                             if(modele.getToolsSelected().getLabel()== "Pelle") modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
-
+                            else
+                            {
+                                modele.arroser(((Case)e.getSource()).x, ((Case)e.getSource()).y);
+                            }
                         } else {
                             String legumeLabel = modele.getLegumeSelected().getLabel();
                             Legumes monLegumeClique = null;
@@ -340,10 +343,65 @@ public class Vue extends JFrame implements Observer {
         return bf_legume;
     }
 
-    public void afficherLesImage()
+    public BufferedImage filtreVert(BufferedImage image)
     {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        BufferedImage filteredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgb = image.getRGB(x, y);
+
+                // Extraire les composantes rouge, verte et bleue du pixel
+                int red = (rgb >> 16) & 0xFF;
+                int green = (rgb >> 8) & 0xFF;
+                int blue = rgb & 0xFF;
+
+                // Appliquer le filtre vert
+                green = Math.min(255, green + 50); // Ajustez la valeur pour obtenir l'effet souhaité
+
+                // Recréer le pixel avec les nouvelles composantes
+                int newRgb = (red << 16) | (green << 8) | blue;
+                filteredImage.setRGB(x, y, newRgb);
+            }
+        }
+
+        return filteredImage;
 
     }
+
+    public BufferedImage filtreRouge(BufferedImage image)
+    {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        BufferedImage filteredImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        // Parcourir tous les pixels de l'image
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgb = image.getRGB(x, y);
+
+                // Extraire les composantes rouge, verte et bleue du pixel
+                int red = (rgb >> 16) & 0xFF;
+                int green = (rgb >> 8) & 0xFF;
+                int blue = rgb & 0xFF;
+
+                // Appliquer le filtre rouge
+                red = Math.min(255, red + 50); // Ajustez la valeur pour obtenir l'effet souhaité
+
+                // Recréer le pixel avec les nouvelles composantes
+                int newRgb = (red << 16) | (green << 8) | blue;
+                filteredImage.setRGB(x, y, newRgb);
+            }
+        }
+
+        return filteredImage;
+    }
+
+
     public void ChargerLesImages()
     {
         BufferedImage image = null; // chargement de l'image globale
@@ -389,7 +447,15 @@ public class Vue extends JFrame implements Observer {
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
-                    BufferedImage im = attribuerImage(modele.plateau[i][j].getLegume());
+                    BufferedImage im;
+                    if(modele.plateau[i][j].getLegume().getCroissance() == 100)
+                    {
+                         im =  filtreVert(attribuerImage(modele.plateau[i][j].getLegume()));
+                    }
+                    else
+                    {
+                         im = attribuerImage(modele.plateau[i][j].getLegume());
+                    }
                     int croissance = modele.plateau[i][j].getLegume().getCroissance();
                     Image iconeLegume = im.getScaledInstance(30 + 70 * croissance / 100, 30 + 60 * croissance / 100, Image.SCALE_SMOOTH); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));

@@ -41,4 +41,9 @@ public class Tomates extends Legumes {
     public int getCroissance() {
         return croissance.getCroissance();
     }
+
+    public void arroser()
+    {
+        this.croissance.currentWater = (int)this.croissance.waterNeed;
+    }
 }
