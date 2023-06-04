@@ -22,8 +22,6 @@ public class Stock extends Observable {
             if(mesLegumesEnStocks[i].getLabel() == legume.getLabel())
             {
                 QuanitéDeLegumeEnStock[i]++;
-                this.setChanged();
-                this.notifyObservers();
             }
         }
 
