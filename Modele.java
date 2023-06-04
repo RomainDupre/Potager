@@ -79,7 +79,7 @@ public class Modele extends Observable implements Runnable{
         while(true) {
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
                 meteo.updateClockTick();
                 refreshPlateau();
             } catch (InterruptedException e) {
@@ -120,7 +120,7 @@ public class Modele extends Observable implements Runnable{
 
     public void arroser(int x, int y) {
         if(plateau[x][y].hasLegume()) {
-            plateau[x][y].getLegume().arroser();
+            plateau[x][y].arroser();
             setChanged();
             notifyObservers();
         }
@@ -128,8 +128,9 @@ public class Modele extends Observable implements Runnable{
 
     public void harverstLegumeInCase(int x, int y){
         if(plateau[x][y].hasLegume()) {
-            monStock.RecolterUnLegume(plateau[x][y].getLegume());
-            System.out.println(monStock.GetNbrLegumeEnStock(plateau[x][y].getLegume()));
+            if(plateau[x][y].getCroissance() >= 100 && plateau[x][y].getLegume().getMaladie() == null){
+                monStock.RecolterUnLegume(plateau[x][y].getLegume());
+            }
             plateau[x][y].harvestLegume();
             setChanged();
             notifyObservers();

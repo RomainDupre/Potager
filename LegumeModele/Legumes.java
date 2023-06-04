@@ -21,7 +21,8 @@ public abstract class Legumes {
         super();
         this.masse = masse;
         this.prix = prix;
-        this.maladie = new Maladie();
+        this.maladie = null;
+        this.maladie = null;
         this.image = null;
     }
 

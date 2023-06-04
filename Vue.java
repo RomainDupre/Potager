@@ -119,7 +119,7 @@ public class Vue extends JFrame implements Observer {
         JComponent panelPlantation = new JPanel(new GridLayout(4,10));
         panelPlantation.setSize(20,400);
         //panel to see all recolted legume
-       JComponent panelRecolte = new JPanel(new GridLayout(3,10));
+        JComponent panelRecolte = new JPanel(new GridLayout(3,10));
         panelRight.add(panelPlantation);
         panelRight.add(panelRecolte,"span");
 
@@ -147,7 +147,6 @@ public class Vue extends JFrame implements Observer {
             label.setIcon(new ImageIcon(iconeLegume));
             panelRecolte.add(label);
             panelRecolte.add(label.getNbrLegumeRecolte());
-
         }
 
         //create tool panel
@@ -327,7 +326,7 @@ public class Vue extends JFrame implements Observer {
             }
         }
         pan.setBorder(blackline);
-       add(split);
+        add(split);
     }
 
     public BufferedImage attribuerImage(Legumes unLegume)
