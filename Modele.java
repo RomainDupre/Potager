@@ -114,7 +114,7 @@ public class Modele extends Observable implements Runnable{
                         }
                     }
 
-                    if(plateau[i][j].legume.getMaladie() != null){
+                    if(plateau[i][j].legume.getMaladie() != null && plateau[i][j].legume.getCroissance() < 100){
                         int random2 = (int)(Math.random() * 100);
                         if(random2 < plateau[i][j].legume.getMaladie().getPropagation()){
                             int random3 = (int)(Math.random() * 3);
@@ -135,16 +135,16 @@ public class Modele extends Observable implements Runnable{
                         }
                     }
 
-                    if(plateau[i][j].humidity < meteo.getCurrentHumidite()) {
-                        plateau[i][j].humidity = meteo.getCurrentHumidite();
-                    }
+
                     float sun = meteo.getCurrentTemperature();
 
                     if(plateau[i][j].legume.getMaladie() == null) {
                         plateau[i][j].grow(sun);
                     }
                 }
-
+                if(plateau[i][j].humidity < meteo.getCurrentHumidite()) {
+                    plateau[i][j].humidity = meteo.getCurrentHumidite();
+                }
             }
         }
     }
