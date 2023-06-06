@@ -164,6 +164,14 @@ public class Modele extends Observable implements Runnable{
         }
     }
 
+    public void healLegumeInCase(int x, int y){
+        if(plateau[x][y].hasLegume()) {
+            plateau[x][y].healLegume();
+            setChanged();
+            notifyObservers();
+        }
+    }
+
     public void harverstLegumeInCase(int x, int y){
         if(plateau[x][y].hasLegume()) {
             if(plateau[x][y].getCroissance() >= 100 && plateau[x][y].getLegume().getMaladie() == null){

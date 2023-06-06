@@ -54,6 +54,12 @@ public class Case extends JLabel implements Observer {
         return 0;
     }
 
+    public void healLegume() {
+        if (legume != null) {
+            legume.setMaladie(null);
+        }
+    }
+
     public boolean hasLegume() {
         return legume != null;
     }

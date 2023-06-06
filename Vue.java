@@ -258,10 +258,9 @@ public class Vue extends JFrame implements Observer {
                     public void mouseClicked(MouseEvent e) {
                         if(modele.isToolsSelected()) {
                             if(modele.getToolsSelected().getLabel()== "Pelle") modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
-                            else
-                            {
-                                modele.arroser(((Case)e.getSource()).x, ((Case)e.getSource()).y);
-                            }
+                            else if (modele.getToolsSelected().getLabel() == "Spray") modele.healLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
+                            else if (modele.getToolsSelected().getLabel() == "Sceau") modele.arroser(((Case) e.getSource()).x, ((Case) e.getSource()).y);
+
                         } else {
                             String legumeLabel = modele.getLegumeSelected().getLabel();
                             Legumes monLegumeClique = null;
