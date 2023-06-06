@@ -116,7 +116,7 @@ public class Modele extends Observable implements Runnable{
 
                     if(plateau[i][j].legume.getMaladie() != null){
                         int random2 = (int)(Math.random() * 100);
-                        if(random2 > plateau[i][j].legume.getMaladie().getPropagation()){
+                        if(random2 < plateau[i][j].legume.getMaladie().getPropagation()){
                             int random3 = (int)(Math.random() * 3);
                             switch (random3){
                                 case 0:
