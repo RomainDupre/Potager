@@ -109,7 +109,7 @@ public class Modele extends Observable implements Runnable{
                 if(plateau[i][j].hasLegume()) {
                     for(int k = 0; k < maladies.length; k++){
                         int random = (int)(Math.random() * 100);
-                        if(random < maladies[k].getProbabilite()){
+                        if(random < maladies[k].getProbabilite() && plateau[i][j].legume.getMaladie() == null && plateau[i][j].legume.getCroissance() < 100){
                             plateau[i][j].getLegume().setMaladie(maladies[k]);
                         }
                     }
@@ -182,6 +182,11 @@ public class Modele extends Observable implements Runnable{
 
     public void harverstLegumeInCase(int x, int y){
         if(plateau[x][y].hasLegume()) {
+            System.out.println(
+                    "Croissance: " + plateau[x][y].getCroissance()
+                    + " Legume: " + plateau[x][y].getLegume().getLabel()
+                    + " Maladie: " + plateau[x][y].getLegume().getMaladie()
+            );
             if(plateau[x][y].getCroissance() >= 100 && plateau[x][y].getLegume().getMaladie() == null){
                 monStock.RecolterUnLegume(plateau[x][y].getLegume());
             }
