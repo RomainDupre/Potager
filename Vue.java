@@ -9,10 +9,7 @@ import blokus.LegumeModele.Legumes;
 import blokus.ListeLegumes.*;
 import blokus.RecolteLegume.LegumesRecolte;
 import blokus.RecolteLegume.Stock;
-import blokus.Tools.Pelle;
-import blokus.Tools.Seau;
-import blokus.Tools.ToolCase;
-import blokus.Tools.Tools;
+import blokus.Tools.*;
 
 import java.awt.*;
 
@@ -47,9 +44,12 @@ public class Vue extends JFrame implements Observer {
     private BufferedImage imageSceau;
     private BufferedImage imagePelle;
 
+    private BufferedImage imageSpray;
+
     public static Tools[] tools = {
         new Pelle(),
         new Seau(),
+        new Spray(),
     };
     static {
         try {
@@ -149,6 +149,8 @@ public class Vue extends JFrame implements Observer {
             panelRecolte.add(label.getNbrLegumeRecolte());
         }
 
+
+
         //create tool panel
         for (int i = 0; i < tools.length; i++){
             ToolCase toolCase = new ToolCase(tools[i]);
@@ -162,6 +164,14 @@ public class Vue extends JFrame implements Observer {
             if(toolCase.getLabel() =="Pelle")
             {
                 Image iconeLegume = imagePelle.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                toolCase.setIcon(new ImageIcon(iconeLegume));
+                toolCase.setHorizontalAlignment(JLabel.CENTER);
+                toolCase.setVerticalAlignment(JLabel.CENTER);
+            }
+
+            if(toolCase.getLabel() =="Spray")
+            {
+                Image iconeLegume = imageSpray.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 toolCase.setIcon(new ImageIcon(iconeLegume));
                 toolCase.setHorizontalAlignment(JLabel.CENTER);
                 toolCase.setVerticalAlignment(JLabel.CENTER);
@@ -426,6 +436,13 @@ public class Vue extends JFrame implements Observer {
         this.imagePelle = null; // chargement de l'image de la terre
         try {
             this.imagePelle = ImageIO.read(new File("LegumeModele/pelle.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.imageSpray = null; // chargement de l'image de la terre
+        try {
+            this.imageSpray = ImageIO.read(new File("LegumeModele/spray.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
