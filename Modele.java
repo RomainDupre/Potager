@@ -120,15 +120,23 @@ public class Modele extends Observable implements Runnable{
                             int random3 = (int)(Math.random() * 3);
                             switch (random3){
                                 case 0:
+                                    if (i-1 < 0)
+                                        break;
                                     if(plateau[i-1][j].legume != null && plateau[i-1][j].legume.getCroissance() < 100)
                                     plateau[i-1][j].legume.setMaladie(plateau[i][j].legume.getMaladie());
                                 case 1:
+                                    if (i+1 >= plateau.length)
+                                        break;
                                     if(plateau[i+1][j].legume != null && plateau[i+1][j].legume.getCroissance() < 100)
                                     plateau[i+1][j].legume.setMaladie(plateau[i][j].legume.getMaladie());
                                 case 2:
+                                    if(j-1 < 0)
+                                        break;
                                     if(plateau[i][j-1].legume != null && plateau[i][j-1].legume.getCroissance() < 100)
                                     plateau[i][j-1].legume.setMaladie(plateau[i][j].legume.getMaladie());
                                 case 3:
+                                    if(j+1 >= plateau[i].length)
+                                        break;
                                     if(plateau[i][j+1].legume != null && plateau[i][j+1].legume.getCroissance() < 100)
                                     plateau[i][j+1].legume.setMaladie(plateau[i][j].legume.getMaladie());
                             }
