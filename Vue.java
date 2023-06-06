@@ -9,10 +9,7 @@ import blokus.LegumeModele.Legumes;
 import blokus.ListeLegumes.*;
 import blokus.RecolteLegume.LegumesRecolte;
 import blokus.RecolteLegume.Stock;
-import blokus.Tools.Pelle;
-import blokus.Tools.Seau;
-import blokus.Tools.ToolCase;
-import blokus.Tools.Tools;
+import blokus.Tools.*;
 
 import java.awt.*;
 
@@ -174,7 +171,7 @@ public class Vue extends JFrame implements Observer {
 
             if(toolCase.getLabel() =="Spray")
             {
-                Image iconeLegume = imagePelle.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                Image iconeLegume = imageSpray.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 toolCase.setIcon(new ImageIcon(iconeLegume));
                 toolCase.setHorizontalAlignment(JLabel.CENTER);
                 toolCase.setVerticalAlignment(JLabel.CENTER);
