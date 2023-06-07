@@ -461,7 +461,7 @@ public class Vue extends JFrame implements Observer {
             for (int j = 0; j < modele.plateau[i].length; j++) {
                 if (modele.plateau[i][j].hasLegume()) {
                     BufferedImage im;
-                    if(modele.plateau[i][j].getLegume().getCroissance() == 100)
+                    if(modele.plateau[i][j].getLegume().getCroissance() >= 100 && modele.plateau[i][j].getLegume().getMaladie()==null)
                     {
                          im =  filtreVert(attribuerImage(modele.plateau[i][j].getLegume()));
                     } else if (modele.plateau[i][j].getLegume().getMaladie() != null) {
