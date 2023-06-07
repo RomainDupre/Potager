@@ -102,8 +102,20 @@ public class Vue extends JFrame implements Observer {
         // Menu Bar
         JMenuBar jm = new JMenuBar();
         JMenu m = new JMenu("Jeu");
-        JMenuItem mi = new JMenuItem("Partie");
+        JMenuItem mi = new JMenuItem(new AbstractAction("Sauvegarder") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                modele.save();
+            }
+        });
+        JMenuItem mii = new JMenuItem(new AbstractAction("Charger") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                modele.read();
+            }
+        });
         m.add(mi);
+        m.add(mii);
         jm.add(m);
         setJMenuBar(jm);
 

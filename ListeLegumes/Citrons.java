@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Citrons extends Legumes {
     public Citrons() throws IOException {
-        super(new Croissance(75, 50, 25, 10, 5));
+        super(new Croissance(50, 15, 100, 50, 5));
     }
 
     @Override

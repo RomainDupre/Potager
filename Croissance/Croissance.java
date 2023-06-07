@@ -1,6 +1,6 @@
 package blokus.Croissance;
 
-public class Croissance {
+public class Croissance implements java.io.Serializable{
     public final int croissanceQota = 100;
     public int waterQota = 0;
     public int sunQota = 0;

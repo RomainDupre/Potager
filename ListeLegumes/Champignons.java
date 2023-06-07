@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Champignons extends Legumes {
 
     public Champignons() throws IOException {
-        super(new Croissance(75, 50, 25, 10, 5));
+        super(new Croissance(120, 60, 10, 5, 15));
     }
 
     @Override

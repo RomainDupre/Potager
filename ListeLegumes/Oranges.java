@@ -14,7 +14,7 @@ public class Oranges extends Legumes {
 
     public Croissance croissance = new Croissance(75, 50, 25, 10, 5);
     public Oranges() throws IOException {
-        super(new Croissance(75, 50, 25, 10, 5));
+        super(new Croissance(75, 25, 100, 40, 15));
     }
 
     @Override

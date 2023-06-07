@@ -1,6 +1,6 @@
 package blokus;
 
-public class Maladie {
+public class Maladie implements java.io.Serializable{
     public int probabilite;
     public String nom;
     public String description;

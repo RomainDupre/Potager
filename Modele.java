@@ -3,6 +3,8 @@ package blokus;
 import blokus.LegumeModele.Legumes;
 import blokus.Meteo.Meteo;
 import blokus.RecolteLegume.Stock;
+import blokus.Save.ReadSave;
+import blokus.Save.Save;
 import blokus.Tools.Tools;
 
 import java.io.IOException;
@@ -108,7 +110,7 @@ public class Modele extends Observable implements Runnable{
             for(int j = 0; j < plateau[i].length; j++){
                 if(plateau[i][j].hasLegume()) {
                     for(int k = 0; k < maladies.length; k++){
-                        int random = (int)(Math.random() * 100);
+                        int random = (int)(Math.random() * 1000);
                         if(random < maladies[k].getProbabilite() && plateau[i][j].legume.getMaladie() == null && plateau[i][j].legume.getCroissance() < 100){
                             plateau[i][j].getLegume().setMaladie(maladies[k]);
                         }
@@ -153,6 +155,8 @@ public class Modele extends Observable implements Runnable{
                 if(plateau[i][j].humidity < meteo.getCurrentHumidite()) {
                     plateau[i][j].humidity = meteo.getCurrentHumidite();
                 }
+                if(plateau[i][j].hasLegume()) plateau[i][j].humidity -= plateau[i][j].getLegume().croissance.waterConsumption;
+
             }
         }
     }
@@ -195,6 +199,17 @@ public class Modele extends Observable implements Runnable{
             setChanged();
             notifyObservers();
         }
+    }
+
+    public void save(){
+
+        Save.sauvegarder(this.plateau, "save.txt");
+        Save.sauvegarderStockage(this.monStock, "stockage.txt");
+    }
+
+    public void read(){
+        this.plateau = ReadSave.loadObject("save.txt");
+        this.monStock = ReadSave.loadStockage("stockage.txt");
     }
 
 }

@@ -16,7 +16,7 @@ import javax.swing.*;
  *
  * @author frederic
  */
-public class Case extends JLabel implements Observer {
+public class Case extends JLabel implements Observer, java.io.Serializable {
     int x;
     int y;
     public Legumes legume;

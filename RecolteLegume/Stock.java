@@ -4,7 +4,7 @@ import blokus.LegumeModele.Legumes;
 
 import java.util.Observable;
 
-public class Stock extends Observable {
+public class Stock extends Observable implements java.io.Serializable{
 
     public Legumes[] mesLegumesEnStocks ;
 

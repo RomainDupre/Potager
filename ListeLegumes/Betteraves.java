@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Betteraves extends Legumes {
 
     public Betteraves() throws IOException {
-        super(new Croissance(75, 50, 25, 10, 5));
+        super(new Croissance(80, 60, 50, 10, 25));
     }
     public void pousser(float water, float sun) {
         croissance.updateCroissance(water, sun);

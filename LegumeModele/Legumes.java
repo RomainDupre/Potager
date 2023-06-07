@@ -5,7 +5,7 @@ import blokus.Maladie;
 
 import java.awt.*;
 
-public abstract class Legumes {
+public abstract class Legumes implements java.io.Serializable {
     private float masse = 0;
     private float prix = 0;
     private Maladie maladie = null;
