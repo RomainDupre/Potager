@@ -2,11 +2,6 @@ package blokus.ListeLegumes;
 
 import blokus.Croissance.Croissance;
 import blokus.LegumeModele.Legumes;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class Champignons extends Legumes {

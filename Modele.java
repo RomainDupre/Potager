@@ -165,6 +165,7 @@ public class Modele extends Observable implements Runnable{
     }
 
     public void arroser(int x, int y) {
+        System.out.println("Arroser");
         if(plateau[x][y].hasLegume()) {
             plateau[x][y].arroser();
             setChanged();

@@ -74,7 +74,6 @@ public class Meteo {
         this.currentTemperature = correspondance.get(this.time) / 100.0f * this.temperature;
         this.currentHumidite = (100.0f - correspondance.get(this.time)) / 100.0f * this.humidite;
         this.currentEnsoleillement =  correspondance.get(this.time) / 100.0f * this.ensoleillement;
-        afficher();
     }
 
     public void generateMeteo(){

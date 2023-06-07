@@ -257,7 +257,6 @@ public class Vue extends JFrame implements Observer {
                             if(modele.getToolsSelected().getLabel()== "Pelle") modele.harverstLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
                             else if (modele.getToolsSelected().getLabel() == "Spray") modele.healLegumeInCase(((Case) e.getSource()).x, ((Case) e.getSource()).y);
                             else if (modele.getToolsSelected().getLabel() == "Sceau") modele.arroser(((Case) e.getSource()).x, ((Case) e.getSource()).y);
-
                         } else {
                             String legumeLabel = modele.getLegumeSelected().getLabel();
                             Legumes monLegumeClique = null;
@@ -457,7 +456,6 @@ public class Vue extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("update done");
 
         for (int i = 0; i < modele.plateau.length; i++) {
             for (int j = 0; j < modele.plateau[i].length; j++) {
@@ -475,7 +473,24 @@ public class Vue extends JFrame implements Observer {
                     int croissance = modele.plateau[i][j].getLegume().getCroissance();
                     Image iconeLegume = im.getScaledInstance(30 + 70 * croissance / 100, 30 + 60 * croissance / 100, Image.SCALE_SMOOTH); // icône redimentionnée
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
-                    plateau[i][j].setBackground(new Color(Integer.parseInt("#6d3305".substring(1), 16)));
+
+                    if(modele.plateau[i][j].humidity < 25)
+                    {
+                        plateau[i][j].setBackground(new Color(Integer.parseInt("#F7750F".substring(1), 16)));
+                    }
+                    else if(modele.plateau[i][j].humidity < 50)
+                    {
+                        plateau[i][j].setBackground(new Color(Integer.parseInt("#C85D09".substring(1), 16)));
+                    }
+                    else if (modele.plateau[i][j].humidity < 75)
+                    {
+                        plateau[i][j].setBackground(new Color(Integer.parseInt("#6d3305".substring(1), 16)));
+                    }
+                    else
+                    {
+                        plateau[i][j].setBackground(new Color(Integer.parseInt("#482306".substring(1), 16)));
+                    }
+
                 } else {
                     Image iconeLegume = imageTerre.getScaledInstance(200, 100, Image.SCALE_SMOOTH);
                     plateau[i][j].setIcon(new ImageIcon(iconeLegume));
@@ -486,7 +501,6 @@ public class Vue extends JFrame implements Observer {
 
         for(int i = 0; i <tableauRecolte.length; i++) {
             tableauRecolte[i].setNbrLegumeRecolte(modele.monStock.GetNbrLegumeEnStock(tableauRecolte[i].getLegume()));
-            System.out.println(tableauRecolte[i].getNbrLegumeRecolte().getText());
         }
     }
 }
